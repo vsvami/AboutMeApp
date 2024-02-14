@@ -9,11 +9,16 @@ import UIKit
 
 final class LoginViewController: UIViewController {
 
+    // MARK: - IB Outlets
+    
     @IBOutlet var userNameTF: UITextField!
     @IBOutlet var passwordTF: UITextField!
     
-    private let user = "User"
-    private let password = "11"
+    // MARK: - Private Properties
+    
+    private let user = User.getUser()
+    
+    // MARK: - Overrides Methods
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
@@ -21,7 +26,7 @@ final class LoginViewController: UIViewController {
     }
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-        guard userNameTF.text == user, passwordTF.text == password else {
+        guard userNameTF.text == user.userName, passwordTF.text == user.password else {
             showAlert(
                 withTitle: "Invalid login or password",
                 andMessage: "Please, enter correct login and password") {
@@ -33,9 +38,29 @@ final class LoginViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let welcomeVC = segue.destination as? WelcomeViewController
-        welcomeVC?.userName = user
+        let welcomeVC = segue.destination as? UITabBarController
+        
+        welcomeVC?.viewControllers?.forEach { viewController in
+            if let homeVC = viewController as? WelcomeViewController {
+                homeVC.userName = user.userName
+                homeVC.fullName = user.person.fullName
+            } else if let navigationVC = viewController as? UINavigationController {
+                navigationVC.title = user.person.fullName
+                
+                let personVC = navigationVC.topViewController as? PersonViewController
+                personVC?.image = user.person.photo
+                personVC?.firstName = user.person.firstName
+                personVC?.lastName = user.person.lastName
+                personVC?.company = user.person.company
+                personVC?.department = user.person.department
+                personVC?.position = user.person.position
+                personVC?.fullName = user.person.fullName
+                personVC?.bio = user.person.bio
+            }
+        }
     }
+    
+    // MARK: - IB Actions
     
     @IBAction func unwind(for segue: UIStoryboardSegue) {
         userNameTF.text = ""
@@ -44,9 +69,11 @@ final class LoginViewController: UIViewController {
     
     @IBAction func forgotRegisterData(_ sender: UIButton) {
         sender.tag == 0
-        ? showAlert(withTitle: "Oops!", andMessage: "Your name is \(user) 😉")
-        : showAlert(withTitle: "Oops!", andMessage: "Your password is \(password) 😉")
+        ? showAlert(withTitle: "Oops!", andMessage: "Your name is \(user.userName) 😉")
+        : showAlert(withTitle: "Oops!", andMessage: "Your password is \(user.password) 😉")
     }
+    
+    // MARK: - Private Methods
     
     private func showAlert(
         withTitle title: String,

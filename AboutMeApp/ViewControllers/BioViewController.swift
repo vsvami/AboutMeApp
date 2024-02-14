@@ -7,23 +7,34 @@
 
 import UIKit
 
-class BioViewController: UIViewController {
+final class BioViewController: UIViewController {
 
+    // MARK: - IB Outlets
+    
+    @IBOutlet var gradientView: UIView!
+    @IBOutlet var bioLabel: UILabel!
+    
+    var fullName: String!
+    var bio: String!
+    
+    // MARK: - Overrides Methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        setupGradient()
+        
+        navigationItem.title = "\(fullName ?? "") Bio"
+        
+        bioLabel.text = bio
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    // MARK: - Private Methods
+    
+    private func setupGradient() {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = view.bounds
+        gradientLayer.colors = [#colorLiteral(red: 0.8463711143, green: 0.4714657664, blue: 0.5296775699, alpha: 1).cgColor, #colorLiteral(red: 0.4036064446, green: 0.5210264921, blue: 0.7680206895, alpha: 1).cgColor]
+        gradientView.layer.addSublayer(gradientLayer)
     }
-    */
-
 }

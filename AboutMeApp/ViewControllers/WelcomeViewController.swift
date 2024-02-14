@@ -9,10 +9,19 @@ import UIKit
 
 final class WelcomeViewController: UIViewController {
     
+    // MARK: - IB Outlets
+    
     @IBOutlet var gradientView: UIView!
+    
     @IBOutlet var userNameLabel: UILabel!
+    @IBOutlet var fullNameLabel: UILabel!
+    
+    // MARK: - Public Properties
     
     var userName: String!
+    var fullName: String!
+    
+    // MARK: - Overrides Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,8 +29,11 @@ final class WelcomeViewController: UIViewController {
         setupGradient()
         
         userNameLabel.text = "Welcome, \(userName ?? "")!"
+        fullNameLabel.text = "My name is \(fullName ?? "")."
         
     }
+    
+    // MARK: - Private Methods
     
     private func setupGradient() {
         let gradientLayer = CAGradientLayer()

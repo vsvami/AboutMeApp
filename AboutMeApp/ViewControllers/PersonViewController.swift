@@ -23,14 +23,7 @@ final class PersonViewController: UIViewController {
     
     // MARK: - Public Properties
     
-    var image: String!
-    var firstName: String!
-    var lastName: String!
-    var company: String!
-    var department: String!
-    var position: String!
-    var fullName: String!
-    var bio: String!
+    var user: User!
     
     // MARK: - Overrides Methods
     
@@ -39,23 +32,21 @@ final class PersonViewController: UIViewController {
         
         setupGradient()
         
-        
-        navigationItem.title = fullName
+        navigationItem.title = user.person.fullName
         
         imageView.layer.cornerRadius = imageView.frame.width / 2
-        imageView.image = UIImage(named: image)
+        imageView.image = UIImage(named: user.person.photo)
         
-        firstNameLabel.text = firstName
-        lastNameLabel.text = lastName
-        companyLabel.text = company
-        departmentLabel.text = department
-        positionLabel.text = position
+        firstNameLabel.text = user.person.firstName
+        lastNameLabel.text = user.person.lastName
+        companyLabel.text = user.person.company
+        departmentLabel.text = user.person.department
+        positionLabel.text = user.person.position
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let bioVC = segue.destination as? BioViewController
-        bioVC?.fullName = fullName
-        bioVC?.bio = bio
+        bioVC?.user = user
     }
     
     // MARK: - Private Methods

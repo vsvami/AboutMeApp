@@ -42,20 +42,12 @@ final class LoginViewController: UIViewController {
         
         welcomeVC?.viewControllers?.forEach { viewController in
             if let homeVC = viewController as? WelcomeViewController {
-                homeVC.userName = user.userName
-                homeVC.fullName = user.person.fullName
+                homeVC.user = user
             } else if let navigationVC = viewController as? UINavigationController {
                 navigationVC.title = user.person.fullName
                 
                 let personVC = navigationVC.topViewController as? PersonViewController
-                personVC?.image = user.person.photo
-                personVC?.firstName = user.person.firstName
-                personVC?.lastName = user.person.lastName
-                personVC?.company = user.person.company
-                personVC?.department = user.person.department
-                personVC?.position = user.person.position
-                personVC?.fullName = user.person.fullName
-                personVC?.bio = user.person.bio
+                personVC?.user = user
             }
         }
     }

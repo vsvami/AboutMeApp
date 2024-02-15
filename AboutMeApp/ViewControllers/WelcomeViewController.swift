@@ -18,8 +18,7 @@ final class WelcomeViewController: UIViewController {
     
     // MARK: - Public Properties
     
-    var userName: String!
-    var fullName: String!
+    var user: User!
     
     // MARK: - Overrides Methods
     
@@ -28,8 +27,8 @@ final class WelcomeViewController: UIViewController {
 
         setupGradient()
         
-        userNameLabel.text = "Welcome, \(userName ?? "")!"
-        fullNameLabel.text = "My name is \(fullName ?? "")."
+        userNameLabel.text = "Welcome, \(user.userName)!"
+        fullNameLabel.text = "My name is \(user.person.fullName)."
         
     }
     

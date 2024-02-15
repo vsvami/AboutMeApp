@@ -14,8 +14,9 @@ final class BioViewController: UIViewController {
     @IBOutlet var gradientView: UIView!
     @IBOutlet var bioLabel: UILabel!
     
-    var fullName: String!
-    var bio: String!
+    // MARK: - Public Properties
+    
+    var user: User!
     
     // MARK: - Overrides Methods
     
@@ -24,9 +25,9 @@ final class BioViewController: UIViewController {
 
         setupGradient()
         
-        navigationItem.title = "\(fullName ?? "") Bio"
+        navigationItem.title = "\(user.person.fullName) Bio"
         
-        bioLabel.text = bio
+        bioLabel.text = user.person.bio
     }
     
     // MARK: - Private Methods
